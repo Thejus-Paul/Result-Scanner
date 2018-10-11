@@ -29,7 +29,7 @@ def database():
     con.row_factory = sql.Row
     cur = con.cursor()
     try: 
-        cur.execute("select * from marks where CS100 is NOT ''")
+        cur.execute("select * from marks")
         rows = cur.fetchall()
         con.close()
         os.system("rm text.txt")
