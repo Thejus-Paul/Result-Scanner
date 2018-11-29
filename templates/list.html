@@ -6,43 +6,27 @@
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
    <body>
-   
+      <div class="container">
+         <a href="/failures">All Failure</a>
+      </div>
+
+   <div class="container">
       <table class="table table-hover">
          <thead>
-            <th scope="col">Name</th>
-            <th scope="col">CY110</th>
-            <th scope="col">PH100</th>
-            <th scope="col">CY100</th>
-            <th scope="col">CS120</th>
-            <th scope="col">CE100</th>
-            <th scope="col">CS100</th>
-            <th scope="col">EC100</th>
-            <th scope="col">BE102</th>
-            <th scope="col">MA102</th>
-            <th scope="col">BE100</th>
-            <th scope="col">BE110</th>
-            <th scope="col">EC110</th>
+            {% for col in cols %}
+            <th scope="col">{{col}}</th>
+            {% endfor %}
          </thead>
-         
+
          {% for row in rows %}
             <tr>
-               <td>{{row["name"]}}</td>
-               <td>{{row["CY110"]}}</td>
-               <td>{{row["PH100"]}}</td>
-               <td>{{row["CY100"]}}</td>
-               <td>{{row["CS120"]}}</td>
-               <td>{{row["CE100"]}}</td>
-               <td>{{row["CS100"]}}</td>
-               <td>{{row["EC100"]}}</td>
-               <td>{{row["BE102"]}}</td>
-               <td>{{row["MA102"]}}</td>
-               <td>{{row["BE100"]}}</td>
-               <td>{{row["BE110"]}}</td>
-               <td>{{row["EC110"]}}</td>
+               {% for col in cols %}
+                  <td>{{row[col]}}</td>
+               {% endfor %}
             </tr>
          {% endfor %}
       </table>
-      
+   </div>   
       <a href = "/">Go back to home page</a>
       
    </body>

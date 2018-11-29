@@ -26,7 +26,8 @@ global dictionary # Dictionary for storing student ID and course grades dictiona
 dictionary = {}
 print
 try:
-	import re        								# Module for Regular Expression(REGEX).
+	import re       								# Module for Regular Expression(REGEX).
+	import pickle
 	source = open("text.txt",'r')
 	regex = r"RET[0-9]+IT[0-9]+"					# REGEX for extracting required students.
 	source_text = source.read()
@@ -41,6 +42,14 @@ try:
 
 	regex = r"[A-Z][A-Z][1-9][0-9][0-9]"			# REGEX for the courses
 	courses = set(re.findall(regex, require_text))	# Finding and storing all courses written by students.
+
+	cols = ["NAME"]
+	for x in courses:
+		cols.append(x)
+
+	courses_pickle  = open("courses.pickle",'wb')
+	pickle.dump(cols,courses_pickle)
+	courses_pickle.close()
 
 	for course in courses:
 		require_text = require_text.replace(course,(" "+course)) # Seperating student ID and cosecutive course. 
@@ -90,7 +99,10 @@ def create_table(conn, sql_create_table):	# Function to create a table.
 
 def insert_data(conn, inputs):				# Function to insert data.
 	sql = ["INSERT INTO marks"]
-	sql.append(" VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+	sql.append(" VALUES(?,?")
+	for x in range(len(courses)):
+		sql.append(',?')
+	sql.append(')')
 	
 	sql_query = ""
 	for i in sql: sql_query+=i
@@ -101,12 +113,13 @@ def insert_data(conn, inputs):				# Function to insert data.
 
 conn = create_connection("MarkList.db")		# Create a database called 'MarkList.db' and create a connection.
 
-sql_create_table = "CREATE TABLE IF NOT EXISTS marks (id integer PRIMARY KEY,name text NOT NULL,"	# Create table if it doesn't exist in the database.
+sql_create_table = "CREATE TABLE IF NOT EXISTS marks (id integer PRIMARY KEY,NAME text NOT NULL,"	# Create table if it doesn't exist in the database.
 sql_command = [sql_create_table]
 for course in courses: sql_command.append((course+" text,"))	# Adding all the required courses as columns in the database.
+print(sql_command)
 sql_command[len(sql_command)-1]=sql_command[len(sql_command)-1][:len(sql_command)-3] # Filtering out ',' character from last.
 sql_command.append(");")
-
+print(sql_command)
 sql_create_table = ""
 for i in sql_command: sql_create_table+=i 	# Join words in 'sql_command' list to a string.
 try:
@@ -117,7 +130,9 @@ except:
 	exit(0)
 
 for item in dictionary:
-	inputs = [None, item,"","","","","","","","","","","",""]	# SQL each student details insertion list.
+	inputs = [None, item]	# SQL each student details insertion list.
+	for x in range(len(courses)):
+		inputs.append("")
 	count = 1 								# Counter to correctly insert grade corresponding to the course. 
 	for i in courses:
 		try:
