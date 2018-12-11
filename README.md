@@ -1,6 +1,6 @@
 # Result-Scanner
 
-This is an application that can extract data from result PDF given by KTU.
+This is an application that can extract data from result PDF given by KTU.(*currently for Rajagiri IT students only*)
 
 ## Installation
 1. Install python 2.7 
