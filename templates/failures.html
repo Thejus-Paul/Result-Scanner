@@ -8,13 +8,13 @@
    <body>
       <div class="container">
          <form method="GET" action="/specific">
+            <a class="btn btn-info" href="/list">Back</a>
             <a class="btn btn-warning" href="/failures">Failures</a>
-
             <label>Subject: </label>
             <select name="subject">
                {% for col in cols %}
                   {%if col != 'NAME'%}
-                     <option>{{col}}</option>
+                     <option value="{{col}}">{{col}}</option>
                   {% endif %}
                {% endfor %}
             </select>
@@ -34,7 +34,11 @@
          {% for row in rows %}
             <tr>
                {% for col in cols %}
+                  {% if((row[col] == 'F') or (row[col]|length == 10)) %}
                   <td>{{row[col]}}</td>
+                  {% else %}
+                  <td> </td>
+                  {% endif %}
                {% endfor %}
             </tr>
          {% endfor %}

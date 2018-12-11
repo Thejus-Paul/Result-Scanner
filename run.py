@@ -116,10 +116,9 @@ conn = create_connection("MarkList.db")		# Create a database called 'MarkList.db
 sql_create_table = "CREATE TABLE IF NOT EXISTS marks (id integer PRIMARY KEY,NAME text NOT NULL,"	# Create table if it doesn't exist in the database.
 sql_command = [sql_create_table]
 for course in courses: sql_command.append((course+" text,"))	# Adding all the required courses as columns in the database.
-print(sql_command)
-sql_command[len(sql_command)-1]=sql_command[len(sql_command)-1][:len(sql_command)-3] # Filtering out ',' character from last.
+sql_command[len(sql_command)-1]=sql_command[len(sql_command)-1][:-1] # Filtering out ',' character from last.
 sql_command.append(");")
-print(sql_command)
+
 sql_create_table = ""
 for i in sql_command: sql_create_table+=i 	# Join words in 'sql_command' list to a string.
 try:
