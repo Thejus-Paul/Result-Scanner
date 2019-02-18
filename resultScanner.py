@@ -59,13 +59,10 @@ def failures():
     database.close()
     return render_template("failures.html",rows = rows,cols = cols)
 
-@resultScanner.route('/list')
-def list():
-    return render_template("list.html",rows = rows,cols = cols)
-
 @resultScanner.route('/database')
 def database():
-    os.system("python run.py")
+    if(os.path.isfile("MarkList.db") == False):   
+        os.system("python run.py")
     database = sql.connect('MarkList.db')
 
     database.row_factory = sql.Row
@@ -97,7 +94,11 @@ def specific():
     print(cols)
     sql_query = ["select NAME,"]
     sql_query.append(subject)
-    sql_query.append(" from marks")
+    sql_query.append(" from marks where")
+    sql_query.append(" ")
+    sql_query.append(subject)
+    sql_query.append("='F'")
+    sql_query.append(" ")
     sql_query.append(" order by ")
     sql_query.append(subject)
     sql_query.append(" asc")

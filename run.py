@@ -58,19 +58,24 @@ try:
 	for i in require_text.split(" "):
 		if(i != ''): filtered_text.append(i)		# Filtering out '' from the list from required_text.
 
-								
+	filtered_text.append("end")
+					
 	student = ''
 	for i in filtered_text:
 		if(i[0] == 'R'):							# 'R'ET17IT001
 			if(student == ''):						# If it is the first student from the filtered_text.
 				student = i 						# student = RET17IT001
 				student_grades = {}					# student_grades will contain {course:grade} pair.
-				continue
-			dictionary.update({student:student_grades}) # Adding the student_grades dictionary to dictionary.
-			student_grades = {}						# Resetting students_grades dictionary.
-			student = i 							# Next student from the filtered_text.
+			else:
+				dictionary.update({student:student_grades}) # Adding the student_grades dictionary to dictionary.
+				student_grades = {}						# Resetting students_grades dictionary.
+				student = i 							# Next student from the filtered_text.
+		elif (i == 'end'):
+			dictionary.update({student:student_grades})
+			student_grades = {}
 		else:
 			student_grades.update({i[:5]:i[6:(len(i)-1)]}) 
+		
 	'''
 		Above line does the following:
 		if CS120(A+) is 'i' then 
