@@ -16,7 +16,13 @@ This is an application that can extract data from result PDF given by KTU.(*curr
 
     ```pip install flask```
     
-4. That's all!
+4. Install python module pdfkit
+
+    ```pip install pdfkit```
+    
+5. Install pdfkit dependency wkhtmltopdf
+
+    ```sudo apt-get install wkhtmltopdf```
 
 ## Running the Application
 
