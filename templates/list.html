@@ -4,25 +4,34 @@
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ url_for('static', filename='tableStyle.css') }}">
     </head>
    <body>
-      <div class="container">
+      <br>
+      <div class="container-fluid">
          <form method="GET" action="/specific">
             <a class="btn btn-warning" href="/failures">Failures</a>
 
             <label>Subject: </label>
-            <select name="subject">
+            <select class="custom-select inline" name="subject">
                {% for col in cols %}
                   {%if col != 'NAME'%}
                      <option>{{col}}</option>
                   {% endif %}
                {% endfor %}
             </select>
+            <select class="custom-select inline" name="type">
+                  <option value="fail">Failures</option>
+                  <option value="result">Results</option>
+                  <option value="outstanding">Outstanding</option>
+               </select>
             <input class="btn btn-info" type="submit" value="Select">
-            <a class="btn btn-danger" href="/logout">Delete Session</a>
+            <a class="btn btn-danger float-right" href="/logout">Delete Session</a>
+            <a class="download float-right" href="/download"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            </a>
          </form>
       </div>
-
+      <br><br>
    <div class="container">
       <table class="table table-hover">
          <thead class="thead-dark">
@@ -39,7 +48,9 @@
             </tr>
          {% endfor %}
       </table>
+      <br><br>
    </div>   
+   
    </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
